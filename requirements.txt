@@ -3,3 +3,4 @@ environs[django]==9.5.0
 django-model-utils==4.3.1
 django-allauth==0.54.0
 crispy-bootstrap5==0.7
+factory-boy==3.2.1
