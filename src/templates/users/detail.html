@@ -15,4 +15,12 @@
     {% endif %}
   </div>
 </div>
+<div class="row mt-3">
+  <h4>Posts by @{{ user.username }}:</h4>
+  {% for post in user.posts.all %}
+    {% include 'components/_post.html' %}
+  {% empty %}
+    <p>{{ user.username }} hasn't posted yet.</p>
+  {% endfor %}
+</div>
 {% endblock content %}
