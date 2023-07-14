@@ -1,3 +1,8 @@
-from django.shortcuts import render
+from django.views.generic.detail import DetailView
 
-# Create your views here.
+from users.models import User
+
+
+class UserDetailView(DetailView):
+    model = User
+    template_name = 'users/detail.html'
