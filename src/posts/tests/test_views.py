@@ -1,8 +1,8 @@
 from django.test import TestCase
 from django.urls import reverse
 
-from users.tests.factories import UserFactory
 from posts.tests.factories import PostFactory
+from users.tests.factories import UserFactory
 
 
 class PostViewTest(TestCase):

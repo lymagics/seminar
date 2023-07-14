@@ -1,8 +1,8 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import View, TemplateView
-from django.views.generic.edit import CreateView
 from django.http import HttpRequest
 from django.urls import reverse_lazy
+from django.views.generic import TemplateView, View
+from django.views.generic.edit import CreateView
 
 from posts.forms import PostForm
 

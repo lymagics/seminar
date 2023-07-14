@@ -1,8 +1,8 @@
 import factory
 from factory.django import DjangoModelFactory
 
-from users.tests.factories import UserFactory
 from posts.models import Post
+from users.tests.factories import UserFactory
 
 
 class PostFactory(DjangoModelFactory):
