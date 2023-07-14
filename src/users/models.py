@@ -17,6 +17,16 @@ class User(mu.TimeStampedModel,
     following = models.ManyToManyField('self',
                                        related_name='followers',
                                        symmetrical=False)
+
+    objects = UserManager()
+
+    @property
+    def avatar_url(self) -> str:
+        avatar_hash = md5(self.email.encode()).hexdigest()
+        return f'https://www.gravatar.com/avatar/{avatar_hash}?d=identicon'
+
+    def get_absolute_url(self) -> str:
+        return reverse('users:detail', kwargs={'pk': self.pk})
     
     def follow(self, user):
         if not self.is_following(user):
@@ -28,13 +38,3 @@ class User(mu.TimeStampedModel,
 
     def is_following(self, user):
         return self.following.filter(pk=user.pk).exists()
-
-    objects = UserManager()
-
-    @property
-    def avatar_url(self) -> str:
-        avatar_hash = md5(self.email.encode()).hexdigest()
-        return f'https://www.gravatar.com/avatar/{avatar_hash}?d=identicon'
-
-    def get_absolute_url(self) -> str:
-        return reverse('users:detail', kwargs={'pk': self.pk})
