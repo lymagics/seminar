@@ -37,3 +37,12 @@ class UserChangeForm(auth_forms.UserChangeForm):
     class Meta:
         model = User
         fields = ('username', 'email', 'about_me',)
+
+
+class UserForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ('username', 'about_me',)
+        help_texts = {
+            'username': None,
+        }

@@ -2,6 +2,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import UpdateView
 
+from users.forms import UserForm
 from users.models import User
 
 
@@ -11,9 +12,8 @@ class UserDetailView(DetailView):
 
 
 class UserUpdateView(LoginRequiredMixin, UpdateView):
-    model = User
+    form_class = UserForm
     template_name = 'users/edit.html'
-    fields = ('username', 'about_me',)
 
     def get_object(self):
         return self.request.user

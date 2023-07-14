@@ -13,7 +13,7 @@ class User(mu.TimeStampedModel,
     """
     User entity.
     """
-    about_me = models.TextField(default='')
+    about_me = models.TextField(default='', blank=True)
 
     objects = UserManager()
 
