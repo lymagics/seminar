@@ -12,6 +12,12 @@
     <p>{{ user.about_me }}</p>
     {% if user == request.user %}
       <a class="btn btn-warning" href="{% url 'users:edit' %}">Edit</a>
+    {% else %}
+      {% if user in request.user.following.all %}
+        <a class="btn btn-warning" href="{% url 'users:unfollow' pk=user.pk %}">Unfollow</a>
+      {% else %}
+        <a class="btn btn-success" href="{% url 'users:follow' pk=user.pk %}">Follow</a>
+      {% endif %}
     {% endif %}
   </div>
 </div>
