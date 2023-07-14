@@ -1,9 +1,23 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
 {% block content %}
-  {% if user.is_authenticated %}
-    <h1>Hello, {{ user.username }}</h1>
-  {% else %}
-    <h2>Welcome to tunnels!</h2>
-  {% endif %}
+  <div class="row mt-3">
+    <div class="col-md-2 d-flex flex-row-reverse">
+      <img class="rounded-circle" src="{{ user.avatar_url }}&s=32">
+    </div>
+    <div class="col-md-8">
+      <form method="POST">
+        {% csrf_token %}
+        {{ form|crispy }}
+      </form>
+    </div>
+  </div>
+  <div class="row">
+    {% for post in user.posts.all %}
+      {% include 'components/_post.html' %}
+    {% empty %}
+      <p>There are no posts in feed page.</p>
+    {% endfor %}
+  </div>
 {% endblock content %}
