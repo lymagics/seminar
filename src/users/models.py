@@ -17,6 +17,17 @@ class User(mu.TimeStampedModel,
     following = models.ManyToManyField('self',
                                        related_name='followers',
                                        symmetrical=False)
+    
+    def follow(self, user):
+        if not self.is_following(user):
+            self.following.add(user)
+
+    def unfollow(self, user):
+        if self.is_following(user):
+            self.following.remove(user)
+
+    def is_following(self, user):
+        return self.following.filter(pk=user.pk).exists()
 
     objects = UserManager()
 
