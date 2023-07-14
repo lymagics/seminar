@@ -27,10 +27,13 @@ class User(mu.TimeStampedModel,
 
     def get_absolute_url(self) -> str:
         return reverse('users:detail', kwargs={'pk': self.pk})
-    
+
     def follow(self, user):
-        if not self.is_following(user):
-            self.following.add(user)
+        if self.is_following(user):
+            return
+        if user == self:
+            return
+        self.following.add(user)
 
     def unfollow(self, user):
         if self.is_following(user):
