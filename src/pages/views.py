@@ -30,7 +30,7 @@ class HomePageView(LoginRequiredMixin, View):
     def get(self, request: HttpRequest, *args, **kwargs):
         view = HomePageGET.as_view()
         return view(request, *args, **kwargs)
-    
+
     def post(self, request: HttpRequest, *args, **kwargs):
         view = HomePagePOST.as_view()
         return view(request, *args, **kwargs)

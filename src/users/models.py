@@ -21,6 +21,6 @@ class User(mu.TimeStampedModel,
     def avatar_url(self) -> str:
         avatar_hash = md5(self.email.encode()).hexdigest()
         return f'https://www.gravatar.com/avatar/{avatar_hash}?d=identicon'
-    
+
     def get_absolute_url(self) -> str:
         return reverse('users:detail', kwargs={'pk': self.pk})

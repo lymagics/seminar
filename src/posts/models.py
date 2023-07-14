@@ -4,7 +4,7 @@ from django.db import models
 from model_utils import models as mu
 
 
-class Post(mu.TimeStampedModel, 
+class Post(mu.TimeStampedModel,
            models.Model):
     """
     Post entity.
@@ -13,9 +13,9 @@ class Post(mu.TimeStampedModel,
     author = models.ForeignKey(settings.AUTH_USER_MODEL,
                                on_delete=models.CASCADE,
                                related_name='posts')
-    
+
     class Meta:
         ordering = ('-created',)
-    
+
     def __str__(self) -> str:
         return self.text

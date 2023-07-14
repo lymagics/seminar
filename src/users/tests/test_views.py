@@ -36,7 +36,7 @@ class UserViewTest(TestCase):
         self.client.force_login(user=self.user)
         new_data = {
             'username': self.faker.user_name(),
-            'about_me': self.faker.paragraph(), 
+            'about_me': self.faker.paragraph(),
         }
         response = self.client.post(self.url_edit, new_data)
         self.assertEqual(response.status_code, 302)

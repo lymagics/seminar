@@ -31,7 +31,7 @@ class HomePageViewTest(TestCase):
         }
         response = self.client.post(self.url, new_post)
         self.assertEqual(response.status_code, 302)
-        
+
         self.user.refresh_from_db()
         post = self.user.posts.first()
         self.assertIsNotNone(post)
