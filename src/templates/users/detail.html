@@ -10,6 +10,7 @@
     <p>Joined: {{ user.created }}</p>
     <p>Last seen: {{ user.last_login }}</p>
     <p>{{ user.about_me }}</p>
+    <p>Followers: {{ user.followers.count }} | Following: {{ user.following.count }}</p>
     {% if user == request.user %}
       <a class="btn btn-warning" href="{% url 'users:edit' %}">Edit</a>
     {% else %}
