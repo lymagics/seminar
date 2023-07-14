@@ -14,6 +14,9 @@ class User(mu.TimeStampedModel,
     User entity.
     """
     about_me = models.TextField(default='', blank=True)
+    following = models.ManyToManyField('self',
+                                       related_name='followers',
+                                       symmetrical=False)
 
     objects = UserManager()
 
