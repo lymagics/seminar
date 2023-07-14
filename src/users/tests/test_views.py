@@ -13,6 +13,8 @@ class UserViewTest(TestCase):
         cls.url_detail = reverse('users:detail', kwargs={'pk': cls.user.pk})
         cls.url_detail_fake = reverse('users:detail', kwargs={'pk': 0})
         cls.url_edit = reverse('users:edit')
+        cls.url_follow = reverse('users:follow', kwargs={'pk': cls.user.pk})
+        cls.url_unfollow = reverse('users:unfollow', kwargs={'pk': cls.user.pk})
         cls.faker = faker.Faker()
 
     def test_displaying_user_information(self):
@@ -48,3 +50,30 @@ class UserViewTest(TestCase):
     def test_editing_user_information_fail_for_anonymous_user(self):
         response = self.client.get(self.url_edit)
         self.assertEqual(response.status_code, 302)
+
+    def test_follow_user(self):
+        follower = UserFactory()
+        self.client.force_login(user=follower)
+        response = self.client.get(self.url_follow)
+        self.assertEqual(response.status_code, 302)
+        follower.refresh_from_db()
+        self.assertTrue(follower.is_following(self.user))
+
+    def test_unfollow_user(self):
+        follower = UserFactory()
+        follower.follow(self.user)
+        self.client.force_login(user=follower)
+        response = self.client.get(self.url_unfollow)
+        self.assertEqual(response.status_code, 302)
+        follower.refresh_from_db()
+        self.assertFalse(follower.is_following(self.user))
+
+    def test_follow_counter_change(self):
+        follower = UserFactory()
+        follower.follow(self.user)
+        self.user.follow(follower)
+        response = self.client.get(self.url_detail)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'users/detail.html')
+        self.assertContains(response, 'Followers: 1')
+        self.assertContains(response, 'Following: 1')
