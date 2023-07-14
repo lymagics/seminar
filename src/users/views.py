@@ -21,8 +21,8 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
         return self.request.user
 
 
-class FollowUserView(LoginRequiredMixin, 
-                     SingleObjectMixin, 
+class FollowUserView(LoginRequiredMixin,
+                     SingleObjectMixin,
                      RedirectView):
     model = User
 
@@ -30,22 +30,22 @@ class FollowUserView(LoginRequiredMixin,
         user = self.get_object()
         request.user.follow(user)
         return super().get(request, *args, **kwargs)
-    
+
     def get_redirect_url(self, *args, **kwargs):
         user = self.get_object()
         return user.get_absolute_url()
 
 
-class UnFollowUserView(LoginRequiredMixin, 
-                     SingleObjectMixin, 
-                     RedirectView):
+class UnFollowUserView(LoginRequiredMixin,
+                       SingleObjectMixin,
+                       RedirectView):
     model = User
 
     def get(self, request: HttpRequest, *args, **kwargs):
         user = self.get_object()
         request.user.unfollow(user)
         return super().get(request, *args, **kwargs)
-    
+
     def get_redirect_url(self, *args, **kwargs):
         user = self.get_object()
         return user.get_absolute_url()
