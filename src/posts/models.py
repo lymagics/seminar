@@ -14,5 +14,8 @@ class Post(mu.TimeStampedModel,
                                on_delete=models.CASCADE,
                                related_name='posts')
     
+    class Meta:
+        ordering = ('-created',)
+    
     def __str__(self) -> str:
         return self.text
