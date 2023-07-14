@@ -12,6 +12,6 @@ class PostForm(forms.ModelForm):
         }
         widgets = {
             'text': forms.TextInput(attrs={
-                'placeholder': 'What\'s on your mind?',
+                'placeholder': 'What is on your mind?',
             }),
         }
