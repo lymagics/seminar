@@ -1,6 +1,6 @@
 from hashlib import md5
 
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, UserManager
 from django.db import models
 
 from model_utils import models as mu
@@ -13,6 +13,8 @@ class User(mu.TimeStampedModel,
     User entity.
     """
     about_me = models.TextField(default='')
+
+    objects = UserManager()
 
     @property
     def avatar_url(self) -> str:
