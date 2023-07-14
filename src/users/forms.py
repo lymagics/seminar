@@ -12,5 +12,4 @@ class UserCreationForm(auth_forms.UserCreationForm):
 class UserChangeForm(auth_forms.UserChangeForm):
     class Meta:
         model = User
-        fields = ('username', 'email', 'about_me',
-                  'created', 'modified', 'is_removed',)
+        fields = ('username', 'email', 'about_me',)
