@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
 
     'users.apps.UsersConfig',
+    'pages.apps.PagesConfig',
 ]
 
 SITE_ID = 1
