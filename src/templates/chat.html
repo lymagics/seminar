@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h3>Chat with {{ user.username }}</h3>
+  {% for message in chat.messages.all %}
+    <p>{{ message.author }}: {{ message.text }}</p>
+  {% empty %}
+    <p>You will be the first one.</p>
+  {% endfor %}
+{% endblock content %}
