@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'pages.apps.PagesConfig',
     'posts.apps.PostsConfig',
+    'chat.apps.ChatConfig',
 ]
 
 SITE_ID = 1
