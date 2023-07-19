@@ -19,6 +19,7 @@
       {% else %}
         <a class="btn btn-success" href="{% url 'users:follow' pk=user.pk %}">Follow</a>
       {% endif %}
+      <a class="btn btn-success" href="{% url 'chat:room' pk=user.pk %}">Message</a>
     {% endif %}
   </div>
 </div>
