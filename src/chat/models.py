@@ -13,7 +13,7 @@ class Chat(models.Model):
                                    related_name='chats')
 
     def __str__(self) -> str:
-        return self.ref
+        return str(self.ref)
 
 
 class Message(models.Model):
