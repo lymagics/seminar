@@ -10,6 +10,7 @@ class PostViewTest(TestCase):
     def setUpTestData(cls):
         cls.user = UserFactory()
         cls.url = reverse('posts:list')
+        cls.url_likes = reverse('posts:likes')
 
     def test_displaying_list_of_posts(self):
         post = PostFactory(author=self.user)
@@ -76,3 +77,12 @@ class PostViewTest(TestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, '/')
+
+    def test_display_liked_posts(self):
+        post = PostFactory(author=self.user)
+        LikeFactory(post=post, user=self.user)
+        self.client.force_login(user=self.user)
+        response = self.client.get(self.url_likes)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'posts/likes.html')
+        self.assertContains(response, post.text)
