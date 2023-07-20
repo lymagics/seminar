@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Liked Posts</h2>
+  {% for like in object_list %}
+    {% with post=like.post %}
+      {% include 'components/_post.html' %}
+    {% endwith %}
+  {% empty %}
+    <p>There are no posts.</p>
+  {% endfor %}
+{% endblock content %}

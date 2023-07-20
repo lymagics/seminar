@@ -49,3 +49,12 @@ class UnlikePostView(LoginRequiredMixin,
         next = self.request.GET.get('next', None)
         return (next if next is not None
                 else super().get_redirect_url(*args, **kwargs))
+
+
+class LikedPostsView(LoginRequiredMixin,
+                     ListView):
+    model = Post
+    template_name = 'posts/likes.html'
+
+    def get_queryset(self):
+        return self.request.user.likes.select_related('user')
