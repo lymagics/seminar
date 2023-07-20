@@ -1,7 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpRequest
-from django.views.generic.detail import DetailView
 from django.shortcuts import redirect
+from django.views.generic.detail import DetailView
 
 from chat.models import Chat
 from users.models import User

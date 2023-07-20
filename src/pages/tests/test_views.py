@@ -3,8 +3,8 @@ from django.urls import reverse
 
 import faker
 
-from users.tests.factories import UserFactory
 from posts.tests.factories import PostFactory
+from users.tests.factories import UserFactory
 
 
 class HomePageViewTest(TestCase):
