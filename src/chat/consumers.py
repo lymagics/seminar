@@ -21,6 +21,14 @@ def add_message(
                            chat=chat)
 
 
+@database_sync_to_async
+def is_participant(
+    user: User, chat: Chat
+) -> bool:
+    return chat.initiator == user or \
+        chat.participant == user
+
+
 class ChatConsumer(AsyncJsonWebsocketConsumer):
     """
     Consumer to serve chat messages.
@@ -28,6 +36,8 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
     async def connect(self):
         self.ref = self.scope['url_route']['kwargs']['ref']
         self.chat = await get_chat(self.ref)
+        if not await is_participant(self.scope['user'], self.chat):
+            return await self.close()
         await self.channel_layer.group_add(self.ref, self.channel_name)
         await self.accept()
 
