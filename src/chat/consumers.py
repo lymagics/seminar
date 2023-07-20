@@ -48,7 +48,7 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
         message = content.get('message')
         await add_message(message, self.scope['user'], self.chat)
         await self.channel_layer.group_send(self.ref, {
-            'type': 'chat.message', 
+            'type': 'chat.message',
             'message': message,
             'author': self.scope['user'].username,
         })

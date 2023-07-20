@@ -19,7 +19,7 @@ class ChatDetailView(LoginRequiredMixin, DetailView):
         chat = Chat.objects.filter(initiator=user, participant=me).first()
         if chat is None:
             chat, _ = Chat.objects.get_or_create(initiator=me,
-                                              participant=user)
+                                                 participant=user)
 
         context['chat'] = chat
         return context

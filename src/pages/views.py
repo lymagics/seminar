@@ -7,7 +7,7 @@ from django.views.generic.list import ListView
 
 from posts.forms import PostForm
 from posts.models import Post
-    
+
 
 class HomePageGET(ListView):
     model = Post
