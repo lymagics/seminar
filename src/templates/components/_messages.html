@@ -1,0 +1,2 @@
+{% for message in chat.messages.all %}{{ message.author }}: {{ message.text }}
+{% empty %}You will be the first one.{% endfor %}

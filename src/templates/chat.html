@@ -2,9 +2,21 @@
 
 {% block content %}
   <h3>Chat with {{ user.username }}</h3>
-  {% for message in chat.messages.all %}
-    <p>{{ message.author }}: {{ message.text }}</p>
-  {% empty %}
-    <p>You will be the first one.</p>
-  {% endfor %}
+  <div class="row">
+    <div class="col-md-8">
+      <textarea class="form-control" id="chat-history" cols="30" rows="10" readonly>{% include 'components/_messages.html' %}</textarea>
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col-md-12 d-flex">
+      <div class="row">
+        <div class="col-md-10">
+          <input class="form-control" type="text" id="new-messages" placeholder="Type here...">
+        </div>
+        <div class="col-md-2">
+          <button class="btn btn-success" id="send">Send</button>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock content %}
