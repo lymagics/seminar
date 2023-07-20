@@ -11,7 +11,7 @@
     <div class="col-md-12 d-flex">
       <div class="row">
         <div class="col-md-10">
-          <input class="form-control" type="text" id="new-messages" placeholder="Type here...">
+          <input class="form-control" type="text" id="message-input" placeholder="Type here...">
         </div>
         <div class="col-md-2">
           <button class="btn btn-success" id="send">Send</button>
@@ -19,4 +19,38 @@
       </div>
     </div>
   </div>
+  {{ chat.ref|json_script:"ref" }}
+  <script>
+    const ref = JSON.parse(document.getElementById('ref').textContent);
+    const chatHistory = document.getElementById('chat-history');
+    const sendButton = document.getElementById('send');
+    const messageInput = document.getElementById('message-input');
+    messageInput.focus();
+    
+    const chatSocket = new WebSocket(
+      'ws://'
+      + window.location.host
+      + '/ws/chat/'
+      + ref
+      + '/'
+    );
+
+    chatSocket.onmessage = (e) => {
+      const data = JSON.parse(e.data);
+      chatHistory.value += `\n${data.author}: ${data.message}`;
+    };
+
+    chatSocket.onclose = (e) => {
+      console.error('Chat socket closed unexpectedly');
+    };
+
+    sendButton.onclick = (e) => {
+      const message = messageInput.value;
+      if (message === '') return;
+      chatSocket.send({
+        message: message,
+      });
+      messageInput.value = '';
+    };
+  </script>
 {% endblock content %}
