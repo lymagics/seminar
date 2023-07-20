@@ -19,3 +19,18 @@ class Post(mu.TimeStampedModel,
 
     def __str__(self) -> str:
         return self.text
+
+
+class Like(models.Model):
+    """
+    Like entity.
+    """
+    post = models.ForeignKey(Post,
+                             on_delete=models.CASCADE,
+                             related_name='likes')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             on_delete=models.CASCADE,
+                             related_name='likes')
+    
+    def __str__(self) -> str:
+        return f'Like of {self.post} by {self.user}'
