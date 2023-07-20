@@ -51,3 +51,28 @@ class PostViewTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'posts/list.html')
         self.assertContains(response, '1 like(s)')
+
+    def test_like_redirects_on_desired_url(self):
+        post = PostFactory(author=self.user)
+        url = reverse('posts:like', kwargs={'pk': post.pk})
+        self.client.force_login(user=self.user)
+        response = self.client.get(f'{url}?next=/posts/')
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, '/posts/')
+
+    def test_unlike_redirects_on_desired_url(self):
+        post = PostFactory(author=self.user)
+        LikeFactory(post=post, user=self.user)
+        url = reverse('posts:unlike', kwargs={'pk': post.pk})
+        self.client.force_login(user=self.user)
+        response = self.client.get(f'{url}?next=/posts/')
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, '/posts/')
+
+    def test_default_after_like_redirect_is_home(self):
+        post = PostFactory(author=self.user)
+        url = reverse('posts:like', kwargs={'pk': post.pk})
+        self.client.force_login(user=self.user)
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, '/')
