@@ -17,6 +17,9 @@ class Post(mu.TimeStampedModel,
     class Meta:
         ordering = ('-created',)
 
+    def get_liked_users(self):
+        return [like.user for like in self.likes.all()]
+
     def __str__(self) -> str:
         return self.text
 

@@ -14,3 +14,16 @@
     {{ post.created }}
   </div>
 </div>
+<div class="row">
+  <div class="col-md-1"></div>
+  <div class="col-md-4">
+    {% if user.is_authenticated %}
+      {% if user in post.get_liked_users %}
+        <a href="{% url 'posts:unlike' pk=post.pk %}">💔</a>
+      {% else %}
+        <a href="{% url 'posts:like' pk=post.pk %}">🧡</a>
+      {% endif %}
+    {% endif %}
+    {{ post.likes.count }} like(s)
+  </div>
+</div>
