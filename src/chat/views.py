@@ -15,14 +15,15 @@ class ChatDetailView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         me = self.request.user
         user = self.get_object()
-        chat = me.chats.filter(users__in=[user]).first()
+
+        chat = Chat.objects.filter(initiator=user, participant=me).first()
         if chat is None:
-            chat = Chat.objects.create()
-            chat.users.add(me)
-            chat.users.add(user)
+            chat, _ = Chat.objects.get_or_create(initiator=me,
+                                              participant=user)
+
         context['chat'] = chat
         return context
-    
+
     def get(self, request: HttpRequest, *args, **kwargs):
         user = self.get_object()
         if self.request.user == user:
