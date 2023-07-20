@@ -9,8 +9,10 @@ class Chat(models.Model):
     Chat entity.
     """
     ref = models.UUIDField(default=uuid.uuid4)
-    users = models.ManyToManyField(settings.AUTH_USER_MODEL,
-                                   related_name='chats')
+    initiator = models.ManyToManyField(settings.AUTH_USER_MODEL,
+                                       related_name='initiated_chats')
+    participant = models.ManyToManyField(settings.AUTH_USER_MODEL,
+                                         related_name='participated_chats')
 
     def __str__(self) -> str:
         return str(self.ref)
