@@ -1,9 +1,8 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpRequest
-from django.views.generic.base import RedirectView
 from django.views.generic.detail import DetailView, SingleObjectMixin
 from django.views.generic.edit import UpdateView
 
+from core.views import ActionView
 from users.forms import UserForm
 from users.models import User
 
@@ -23,13 +22,12 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
 
 class FollowUserView(LoginRequiredMixin,
                      SingleObjectMixin,
-                     RedirectView):
+                     ActionView):
     model = User
 
-    def get(self, request: HttpRequest, *args, **kwargs):
+    def perform_action(self):
         user = self.get_object()
-        request.user.follow(user)
-        return super().get(request, *args, **kwargs)
+        self.request.user.follow(user)
 
     def get_redirect_url(self, *args, **kwargs):
         user = self.get_object()
@@ -38,13 +36,12 @@ class FollowUserView(LoginRequiredMixin,
 
 class UnFollowUserView(LoginRequiredMixin,
                        SingleObjectMixin,
-                       RedirectView):
+                       ActionView):
     model = User
 
-    def get(self, request: HttpRequest, *args, **kwargs):
+    def perform_action(self):
         user = self.get_object()
-        request.user.unfollow(user)
-        return super().get(request, *args, **kwargs)
+        self.request.user.unfollow(user)
 
     def get_redirect_url(self, *args, **kwargs):
         user = self.get_object()
