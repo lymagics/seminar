@@ -116,3 +116,12 @@ CRISPY_TEMPLATE_PACK = 'bootstrap5'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 ACCOUNT_LOGOUT_ON_GET = True
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [(env.str('REDIS_HOST'), env.int('REDIS_PORT'))],
+        },
+    },
+}
