@@ -25,6 +25,11 @@ class LikePostView(LoginRequiredMixin,
         post = self.get_object()
         Like.objects.get_or_create(post=post, 
                                    user=self.request.user)
+        
+    def get_redirect_url(self, *args, **kwargs):
+        next = self.request.GET.get('next', None)
+        return (next if next is not None
+                else super().get_redirect_url(*args, **kwargs))
 
 
 class UnlikePostView(LoginRequiredMixin,
@@ -39,3 +44,8 @@ class UnlikePostView(LoginRequiredMixin,
                                    user=self.request.user).first()
         if like is not None:
             like.delete()
+
+    def get_redirect_url(self, *args, **kwargs):
+        next = self.request.GET.get('next', None)
+        return (next if next is not None
+                else super().get_redirect_url(*args, **kwargs))
