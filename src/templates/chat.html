@@ -37,7 +37,7 @@
 
     chatSocket.onmessage = (e) => {
       const data = JSON.parse(e.data);
-      chatHistory.value += `\n${data.author}: ${data.message}`;
+      chatHistory.value += `${data.author}: ${data.message}\n`;
     };
 
     chatSocket.onclose = (e) => {
@@ -47,9 +47,9 @@
     sendButton.onclick = (e) => {
       const message = messageInput.value;
       if (message === '') return;
-      chatSocket.send({
+      chatSocket.send(JSON.stringify({
         message: message,
-      });
+      }));
       messageInput.value = '';
     };
   </script>
