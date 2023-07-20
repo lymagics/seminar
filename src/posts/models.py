@@ -34,6 +34,6 @@ class Like(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              on_delete=models.CASCADE,
                              related_name='likes')
-    
+
     def __str__(self) -> str:
         return f'Like of {self.post} by {self.user}'

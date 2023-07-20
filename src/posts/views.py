@@ -23,9 +23,9 @@ class LikePostView(LoginRequiredMixin,
 
     def perform_action(self):
         post = self.get_object()
-        Like.objects.get_or_create(post=post, 
+        Like.objects.get_or_create(post=post,
                                    user=self.request.user)
-        
+
     def get_redirect_url(self, *args, **kwargs):
         next = self.request.GET.get('next', None)
         return (next if next is not None
@@ -33,14 +33,14 @@ class LikePostView(LoginRequiredMixin,
 
 
 class UnlikePostView(LoginRequiredMixin,
-                      SingleObjectMixin,
-                      ActionView):
+                     SingleObjectMixin,
+                     ActionView):
     model = Post
     url = reverse_lazy('pages:home')
 
     def perform_action(self):
         post = self.get_object()
-        like = Like.objects.filter(post=post, 
+        like = Like.objects.filter(post=post,
                                    user=self.request.user).first()
         if like is not None:
             like.delete()
