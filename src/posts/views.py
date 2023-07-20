@@ -1,10 +1,10 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
 from django.views.generic.detail import SingleObjectMixin
 from django.views.generic.list import ListView
-from django.urls import reverse_lazy
 
 from core.views import ActionView
-from posts.models import Post, Like
+from posts.models import Like, Post
 
 
 class PostListView(ListView):

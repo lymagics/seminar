@@ -1,7 +1,7 @@
 import factory
 from factory.django import DjangoModelFactory
 
-from posts.models import Post, Like
+from posts.models import Like, Post
 from users.tests.factories import UserFactory
 
 

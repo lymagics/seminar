@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.urls import reverse
 
-from posts.tests.factories import PostFactory, LikeFactory
+from posts.tests.factories import LikeFactory, PostFactory
 from users.tests.factories import UserFactory
 
 
