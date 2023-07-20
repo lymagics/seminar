@@ -37,6 +37,10 @@
 
     chatSocket.onmessage = (e) => {
       const data = JSON.parse(e.data);
+      if (chatHistory.value === 'You will be the first one.') {
+        chatHistory.value = `${data.author}: ${data.message}\n`;
+        return;
+      }
       chatHistory.value += `${data.author}: ${data.message}\n`;
     };
 
