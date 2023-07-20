@@ -1,4 +1,24 @@
+from django.shortcuts import get_object_or_404
+
+from channels.db import database_sync_to_async
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
+
+from chat.models import Chat, Message
+from users.models import User
+
+
+@database_sync_to_async
+def get_chat(ref: str):
+    return get_object_or_404(Chat, ref=ref)
+
+
+@database_sync_to_async
+def add_message(
+    text: str, author: User, chat: Chat
+):
+    Message.objects.create(text=text,
+                           author=author,
+                           chat=chat)
 
 
 class ChatConsumer(AsyncJsonWebsocketConsumer):
@@ -7,6 +27,7 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
     """
     async def connect(self):
         self.ref = self.scope['url_route']['kwargs']['ref']
+        self.chat = await get_chat(self.ref)
         await self.channel_layer.group_add(self.ref, self.channel_name)
         await self.accept()
 
@@ -15,6 +36,7 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
 
     async def receive_json(self, content):
         message = content.get('message')
+        await add_message(message, self.scope['user'], self.chat)
         await self.channel_layer.group_send(self.ref, {
             'type': 'chat.message', 
             'message': message,
